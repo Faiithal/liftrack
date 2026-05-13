@@ -60,7 +60,11 @@ const envSchema = z.object({
     // Logging
     LOG_LEVEL: z
         .enum(['error', 'warn', 'info', 'debug', 'trace'])
-        .default(isProduction ? 'info' : 'debug')
+        .default(isProduction ? 'info' : 'debug'),
+
+    // Rate Limiting
+    RATE_LIMIT_WINDOW: z.coerce
+        .number().positive().default(isProduction ? 900000 : 60000) // 15 min prod, 1 min dev
 })
 
 // Type Inference from Schema
